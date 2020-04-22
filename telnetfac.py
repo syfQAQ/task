@@ -3,7 +3,8 @@ import telnetlib
 import requests
 import json
 import os
-def checkSd(devhost, user, pwd, finish, mountCmd,i):
+def checkSd(devhost, user, pwd, finish, mountCmd,i,setMsgLab):
+    MsgLab = setMsgLab
     try:
         tn = telnetlib.Telnet(devhost, port=23, timeout=3)
     except Exception as e:
@@ -20,37 +21,41 @@ def checkSd(devhost, user, pwd, finish, mountCmd,i):
     tn.read_until(finish)
 
     if i == 2:
-        print("sdkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+        print("sd检测中")
+        MsgLab("检测中", "yellow")
         tn.write(b"chmod + x /tmp/fac/test_fac/fac_common/test_fac_sd.sh;/tmp/fac/test_fac/fac_common/test_fac_sd.sh;cp /tmp/sd_check_report /tmp/fac/test_fac/sd_check_report -f;sync;\n")
         tn.read_until(finish)
         time.sleep(2)
         tn.close()
         return 0
 
-
     if i == 5:
-        print("wifiiiiiiiiiiiiiiiiiiiiiiiiiii")
+        print("wifi检测中")
+        MsgLab("检测中", "yellow")
         tn.write(b"chmod + x /tmp/fac/test_fac/fac_common/test_fac_wifi.sh;/tmp/fac/test_fac/fac_common/test_fac_wifi.sh;cp /tmp/sd_check_report /tmp/fac/test_fac/sd_check_report -f;sync;\n")
         tn.read_until(finish)
         time.sleep(2)
         tn.close()
         return 0
+
     elif i == 4:
-        print("probeeeeeeeeeeeeeeeeeeeeeeeee")
+        print("probe检测中")
         tn.write(b"chmod + x /tmp/fac/test_fac/fac_common/test_fac_probe.sh;/tmp/fac/test_fac/fac_common/test_fac_probe.sh;cp /tmp/sd_check_report /tmp/fac/test_fac/sd_check_report -f;sync;\n")
         tn.read_until(finish)
         time.sleep(2)
         tn.close()
         return 0
+
     elif i == 1:
-        print("common gpssssssssssssssssssssssssss")
+        print("GPS检测中")
         tn.write(b"chmod + x /tmp/fac/test_fac/fac_common/test_fac_gps.sh;/tmp/fac/test_fac/fac_common/test_fac_gps.sh;cp /tmp/sd_check_report /tmp/fac/test_fac/sd_check_report -f;sync;\n")
         tn.read_until(finish)
-        time.sleep(2)
+        time.sleep(3)
         tn.close()
         return 0
+
     elif i == 6:
-        print("mac ccccccccccccccccccccccccc")
+        print("mac 获取中")
         tn.write(b"chmod + x /tmp/fac/test_fac/fac_common/test_fac_mac.sh;/tmp/fac/test_fac/fac_common/test_fac_mac.sh;cp /tmp/sd_check_report /tmp/fac/test_fac/sd_check_report -f;sync;\n")
         tn.read_until(finish)
         time.sleep(2)
